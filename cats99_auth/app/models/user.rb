@@ -17,11 +17,16 @@ class User < ApplicationRecord
 
     attr_reader :password
 
+    has_many :cats,
+        primary_key: :id,
+        foreign_key: :user_id,
+        class_name: :Cat
+
     def ensure_session_token #E
         self.session_token ||= User.generate_session_token
     end
 
-    def generate_session_token #G
+    def self.generate_session_token #G
         SecureRandom.urlsafe_base64
     end
 
